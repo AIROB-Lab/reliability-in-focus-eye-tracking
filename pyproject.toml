@@ -1,0 +1,72 @@
+[tool.poetry]
+name = "trust-in-prosthesis-analysis"
+version = "0.1.0"
+description = ""
+authors = ["Fabio Egle <fabio.egle@fau.de>, Liv Herzer <liv.herzer@fau.de>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pandas = "^2.1.4"
+ipykernel = "6.26.0"
+matplotlib = "3.7.3"
+numba = "^0.59.0"
+tpcp = "^0.33.0"
+pywavelets = "^1.6.0"
+pingouin = "^0.5.5"
+rpy2 = "^3.5.17"
+seaborn = "0.13.2"
+openpyxl = "^3.1.5"
+duckdb = "^1.4.0"
+mujoco = "^3.4.0"
+tqdm = "^4.67.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.dev.dependencies]
+black = { version="^22", extras=["jupyter", "d"] }
+# ruff = "^0.0.261"
+poethepoet = "^0.11.0"
+ipympl = "0.9.3"
+
+[tool.black]
+line-length = 120
+target-version = ['py38']
+exclude = '''
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | docs
+    | build
+    | dist
+    | \.ipynb_checkpoints
+    | \.virtual_documents
+  )/
+)
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 120
+skip_gitignore = true
+
+
+[tool.poe.tasks]
+format = {cmd = "black .", help = "Format all files." }
+# lint = { cmd = "ruff trust_in_prosthesis_analysis --fix", help = "Lint all files with ruff." }
+# _lint_ci = "ruff trust_in_prosthesis_analysis --format=github"
+# _check_black = "black . --check"
+# ci_check = { sequence = ["_check_black", "_lint_ci"], help = "Check all potential format and linting issues." }
+# test = {cmd = "pytest --cov=trust_in_prosthesis_analysis --cov-report=xml", help = "Run Pytest with coverage." }
+register_ipykernel = { cmd = "python -m ipykernel install --user --name trust_in_prosthesis_analysis --display-name trust_in_prosthesis_analysis", help = "Add a new jupyter kernel for the project."}
+remove_ipykernel = { cmd = "jupyter kernelspec uninstall trust_in_prosthesis_analysis", help = "Remove the project specific jupyter kernel."}
